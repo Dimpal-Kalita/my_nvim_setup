@@ -259,7 +259,19 @@ require('lazy').setup({
   },
 
   -- My Custom Plugins
-  --
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    -- Optional dependency
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      require('nvim-autopairs').setup {}
+      -- If you want to automatically add `(` after selecting a function or method
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      local cmp = require 'cmp'
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end,
+  },
   -- {
   --   'xeluxee/competitest.nvim',
   --   dependencies = 'MunifTanjim/nui.nvim',
@@ -271,9 +283,9 @@ require('lazy').setup({
   --     }
   --   end,
   -- },
-  {
-    'searleser97/cpbooster.vim',
-  },
+  -- {
+  --   'searleser97/cpbooster.vim',
+  -- },
   --
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -746,13 +758,13 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          -- ['<C-y>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
